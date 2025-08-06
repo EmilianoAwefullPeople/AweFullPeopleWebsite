@@ -1,0 +1,187 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+/* Header and Navigation */
+header, nav {
+    background-color: #1A1A1A;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* Who We Are Section */
+#who-we-are {
+    padding: 50px 20px;
+    background-color: #f9f9f9;
+}
+
+.team-members {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+.team-member {
+    text-align: center;
+}
+
+.team-member img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Travel App Section */
+.travel-app-section {
+    background-color: #1A1A1A;
+    padding: 50px 20px;
+    color: white;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.text-content {
+    max-width: 50%;
+}
+
+.feature-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.feature-buttons button {
+    background-color: white;
+    color: black;
+    border-radius: 8px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.coming-soon {
+    font-style: italic;
+    margin-top: 20px;
+}
+
+.image-content img {
+    max-width: 300px;
+}
+
+/* Philosophy Section */
+.philosophy-section {
+    padding: 50px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.philosophy-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.philosophy-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.philosophy-item img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
+
+/* Media Section */
+.media-section {
+    padding: 50px 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.media-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.button-grid button {
+    background-color: #ccc;
+    border: none;
+    padding: 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Footer */
+.site-footer {
+    background-color: #1A1A1A;
+    color: white;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.footer-nav a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    margin: 10px 0;
+}
+
+.copyright {
+    color: #999;
+    margin-top: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .team-members, .container, .philosophy-item {
+        flex-direction: column;
+        align-items: center;
+    }
+    .text-content {
+        max-width: 100%;
+        text-align: center;
+    }
+    .feature-buttons, .button-grid {
+        grid-template-columns: 1fr;
+    }
+}

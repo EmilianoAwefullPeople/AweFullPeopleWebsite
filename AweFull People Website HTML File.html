@@ -1,0 +1,177 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Those AweFull People</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Those AweFull People</h1>
+            <p>Reflect, Connect, Travel & Create</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#who-we-are">WHO WE ARE</a></li>
+            <li><a href="#travel-app">OUR TRAVEL APP</a></li>
+            <li><a href="#philosophy">OUR PHILOSOPHY & PRINCIPLES</a></li>
+            <li><a href="#media">MEDIA, LINKS & RESOURCES</a></li>
+        </ul>
+    </nav>
+
+    <section id="who-we-are">
+        <h1>WHO WE ARE</h1>
+        <p>We are a group of people who have been deeply impacted by the experiences of awe, connection, reflection and traveling. Through our work, we seek to expand the tracks record of success and their positive effects.</p>
+        <div class="team-members">
+            <div class="team-member">
+                <h2>Glenn Astofi</h2>
+                <p>Seasoned entrepreneur and executive with a track record of success across diverse industries, including technology, financial services, brick and mortar and online retail. He has held senior leadership roles in startups and large public companies, specializing in finance, business strategy, and innovation-driven capital fundraising.</p>
+                <img src="images/glenn_astolfi.jpg" alt="Glenn Astofi">
+            </div>
+            <div class="team-member">
+                <h2>Emiliano Sigales</h2>
+                <p>Multidisciplinary entrepreneur passionate about personal development, travel, and meaningful innovation. Emiliano builds visionary projects that connect and empower others, blending digital nomadism, podcasting, and technology with systems thinking and human-centered design.</p>
+                <img src="images/emiliano_sigales.jpg" alt="Emiliano Sigales">
+            </div>
+        </div>
+    </section>
+
+    <section id="travel-app" class="travel-app-section">
+        <div class="container">
+            <div class="text-content">
+                <h2>OUR TRAVEL APP</h2>
+                <p>A tool we are creating to help you build a personal narrative and meaning in life through traveling.</p>
+                <div class="feature-buttons">
+                    <button>LOG YOUR EXPERIENCES</button>
+                    <button>JOURNAL REFLECTIONS</button>
+                    <button>TRACK YOUR TRIPS</button>
+                    <button>CREATE SHAREABLE POST CARDS</button>
+                </div>
+                <p class="coming-soon">Coming soon...</p>
+            </div>
+            <div class="image-content">
+                <img src="images/travel_app_phone.png" alt="Travel App on Phone" class="phone-graphic">
+            </div>
+        </div>
+    </section>
+
+    <section id="philosophy" class="philosophy-section">
+        <div class="philosophy-header">
+            <h1>OUR PHILOSOPHY & PRINCIPLES</h1>
+            <p>These are the ideas and experiences that guide what we're creating...</p>
+        </div>
+        <div class="philosophy-item">
+            <img src="images/who_are_awefull_people.jpg" alt="Who Are AweFull People" loading="lazy">
+            <div class="text-content">
+                <h2>Who Are AweFull People</h2>
+                <p>Definition of awefull people.</p>
+            </div>
+        </div>
+        <div class="philosophy-item">
+            <img src="images/awe_wonder.jpg" alt="Awe & Wonder" loading="lazy">
+            <div class="text-content">
+                <h2>Awe & Wonder</h2>
+                <p>Definition of awe.</p>
+            </div>
+        </div>
+        <div class="philosophy-item">
+            <img src="images/connflection.jpg" alt="Connflection" loading="lazy">
+            <div class="text-content">
+                <h2>"Connflection"</h2>
+                <p>The simultaneous happening of connection and reflection.</p>
+            </div>
+        </div>
+        <div class="philosophy-item">
+            <img src="images/thomas_berry.jpg" alt="Thomas Berry's Work" loading="lazy">
+            <div class="text-content">
+                <h2>Thomas Berry's Work</h2>
+                <p>Thomas Berry was one of the 20th century's most prescient and profound thinkers, a cultural historian, philosopher, and Catholic priest who explored the relationship between humans and the natural world, urging a shift toward ecological consciousness.</p>
+            </div>
+        </div>
+        <div class="philosophy-item">
+            <img src="images/overview_effect.jpg" alt="The Overview Effect" loading="lazy">
+            <div class="text-content">
+                <h2>The Overview Effect</h2>
+                <p>Describe the overview effect.</p>
+            </div>
+        </div>
+        <div class="philosophy-item">
+            <img src="images/meaning_making.jpg" alt="Meaning-Making" loading="lazy">
+            <div class="text-content">
+                <h2>Meaning-Making</h2>
+                <p>Introduction to meaning-making.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="media" class="media-section">
+        <div class="media-header">
+            <h1>MEDIA, LINKS & RESOURCES</h1>
+            <p>Explore the inspiration behind our journey...</p>
+        </div>
+        <div class="button-grid">
+            <button data-url="">Video 1</button>
+            <button data-url="">Video 2</button>
+            <button data-url="">Website 1</button>
+            <button data-url="">PDF 1</button>
+            <button data-url="">Video 3</button>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-nav">
+            <a href="#who-we-are">Who We Are</a>
+            <a href="#travel-app">Our Travel App</a>
+            <a href="#philosophy">Our Philosophy & Principles</a>
+            <a href="#media">Media, Links & Resources</a>
+            <a href="#home" class="brand">THOSE AWEFULL PEOPLE</a>
+        </div>
+        <p class="copyright">© 2025 Those AweFull People. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
