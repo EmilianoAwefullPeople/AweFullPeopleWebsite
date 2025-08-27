@@ -1,0 +1,2029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Those AweFull People</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== GENERAL STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+        /* Smooth scrolling for navigation */
+        html {
+            scroll-behavior: smooth;
+        }
+        /* ===== HEADER SECTION STYLES ===== */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            color: white;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 0;
+        }
+        .slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 600%; /* 6 images */
+            height: 100%;
+            display: flex;
+            transition: transform 0.5s ease; /* Reduced transition time for better swipe feel */
+            z-index: -1;
+        }
+        .slide {
+            width: 16.666%; /* Each image takes 1/6 of the slider width */
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            font-family: 'Montserrat', sans-serif;
+        }
+        .hamburger {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            height: 100vh;
+            background-color: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            transition: right 0.3s ease;
+            padding: 80px 20px 20px;
+        }
+        /* Desktop Menu */
+        @media (min-width: 769px) {
+            .mobile-menu {
+                width: 30%;
+            }
+        }
+        .mobile-menu.active {
+            right: 0;
+        }
+        .mobile-menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .mobile-menu a.brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 20px;
+            border-bottom: none;
+        }
+        /* Close Button */
+        .close-menu {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Hero Content */
+        .hero-content {
+            position: absolute;
+            top: 45%; /* Moved up from 50% */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 1;
+            width: 100%;
+        }
+        .hero-content h1 {
+            font-size: 1.76rem; /* Reduced by 20% from 2.2rem */
+            font-weight: 400; /* Changed from 700 to 400 (not bold) */
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            margin: 0; /* Reduced margin */
+            line-height: 1.2; /* Reduced line height */
+            text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .hero-content .sub-text {
+            font-size: 3.911rem; /* Reduced by 20% from 4.889rem */
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            margin: 5px 0 0 0; /* Reduced top margin and removed bottom margin */
+            line-height: 1.2; /* Reduced line height */
+            text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif;
+            opacity: 0;
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, 20%); /* Adjusted position */
+            width: 100%;
+            transition: opacity 1s ease;
+            word-break: break-word;
+        }
+        .hero-content .sub-text.active {
+            opacity: 1;
+        }
+        /* Location Text */
+        .location-text {
+            position: absolute;
+            bottom: 60px; /* Above the dots */
+            left: 20px;
+            font-size: 1rem;
+            font-weight: 400;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            transition: opacity 1s ease;
+            text-align: left;
+            line-height: 1.3;
+            z-index: 2;
+        }
+        .location-text.active {
+            opacity: 1;
+        }
+        /* Carousel Dots */
+        .carousel-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 1px solid white;
+            background: transparent;
+            cursor: pointer;
+        }
+        .dot.active {
+            background: white;
+        }
+        /* ===== TRAVEL APP SECTION STYLES ===== */
+        .travel-app-section {
+            background-color: #1A1A1A;
+            padding: 65px 20px; /* 1.3x padding */
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+        }
+        .app-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .main-element {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 5px; /* 5px gap between text and image */
+            max-width: 1200px;
+            width: 100%;
+            padding: 0 40px; /* Lateral padding from screen edges */
+        }
+        .image-content {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end; /* Align image to the right within its container */
+        }
+        .text-content {
+            flex: 1;
+            color: white;
+        }
+        .text-content h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .app-description {
+            font-size: 1.25rem;
+            max-width: 400px;
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .bold-line {
+            font-weight: bold;
+            display: block;
+        }
+        .italic-line {
+            font-style: italic;
+            display: block;
+        }
+        .feature-buttons {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 20px;
+            margin-bottom: 44px; /* 2.2x spacing */
+            max-width: fit-content;
+        }
+        .feature-button {
+            position: relative;
+            background-color: white;
+            color: black;
+            border-radius: 8px;
+            padding: 12px 15px;
+            font-size: 0.875rem;
+            font-weight: 700;
+            /* Changed from text-transform: uppercase */
+            cursor: pointer;
+            border: none;
+            /* Slower, smoother transition for all properties */
+            transition: all 0.4s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 354px; /* Increased by 1.3x from 272px */
+            min-height: 60px; /* 1.2x taller (50px * 1.2) */
+            max-width: 354px; /* Fixed width */
+            max-height: 60px; /* Fixed height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .feature-button-content {
+            transition: opacity 0.4s ease; /* Match button transition */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+        /* Hover state: Button changes color and text only */
+        .feature-button:hover {
+            background-color: black;
+            color: white;
+            border: 1px solid white;
+            font-weight: 400;
+            width: 354px; /* Fixed width */
+            height: 60px; /* Fixed height */
+            padding: 12px 15px; /* Keep original padding */
+            font-size: 0.875rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .feature-button:hover .feature-button-content {
+            opacity: 0;
+        }
+        .feature-button-hover-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            /* Enhanced transition for delayed fade-in effect with 0.2s delay */
+            transition: opacity 0.4s ease 0.2s; /* 0.2 second delay for fade-in */
+            text-align: center;
+            /* Minimal padding to utilize full button width */
+            padding: 8px 6px; /* Reduced from 5px 2px for better text distribution */
+            color: white;
+            font-weight: 400;
+            /* Optimized font size for better readability */
+            font-size: 0.85rem;
+            max-width: 96%; /* Increased from 98% to use nearly full width */
+            width: 96%; /* Set explicit width to ensure full utilization */
+            word-wrap: break-word;
+            /* Tighter line height */
+            line-height: 1.3; /* Slightly increased from 1.2 for better readability */
+        }
+        .feature-button:hover .feature-button-hover-content {
+            opacity: 1;
+        }
+        /* Reset hover content when not hovering */
+        .feature-button:not(:hover) .feature-button-hover-content {
+            /* Immediate reset when not hovering */
+            transition: opacity 0s ease 0s;
+            opacity: 0;
+        }
+        /* Sentence case transformation for hover text */
+        .feature-button-hover-content {
+            text-transform: lowercase;
+        }
+        .feature-button-hover-content::first-letter {
+             text-transform: uppercase;
+        }
+        .coming-soon {
+            font-size: 1rem;
+            font-style: italic;
+            color: white;
+            text-align: left;
+        }
+        .phone-graphic {
+            max-width: 486px; /* 1.35x bigger (360px * 1.35) */
+            transform: none;
+            box-shadow: none;
+            animation: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .phone-graphic.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .fade-element {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .fade-element.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* ===== START YOUR JOURNEY SECTION STYLES ===== */
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #fff;
+            color: #111;
+            text-align: center;
+            overflow-x: hidden;
+        }
+        /* Section container */
+        .hero {
+            padding: 2.5rem 1rem;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: bolder;
+            margin-bottom: 0.2rem;
+        }
+        .hero p {
+            font-size: 1.5rem;
+            color: #444;
+            margin-bottom: 2rem;
+        }
+        /* Carousel wrapper */
+        .carousel-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+        /* Carousel container */
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .card {
+            position: relative;
+            width: 405px;   /* 1.35x original */
+            height: 270px;  /* 1.35x original */
+            flex-shrink: 0;
+            margin: 0 10px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        .card:hover img {
+            transform: scale(1.05);
+        }
+        .card .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            text-align: center;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0);
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            max-width: 90%;
+            max-height: 90%;
+            word-wrap: break-word;
+            white-space: normal;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        /* Pagination dots */
+        .pagination {
+            margin: 1rem 0;
+        }
+        .dot-pagination {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin: 0 5px;
+            border-radius: 50%;
+            background: #ccc;
+            cursor: pointer;
+        }
+        .dot-pagination.active {
+            background: #333;
+        }
+        /* CTA section */
+        .cta {
+            margin-top: 2rem;
+        }
+        .cta p {
+            font-size: 1.45rem;
+            margin-bottom: 1rem;
+        }
+        .main-btn {
+            background: #1e2b32;
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 1.2rem 2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            /* NEW: Border styling for the main button container */
+            border: 2px solid #1e2b32;
+        }
+        .sub-btn {
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: bold;
+            background: #fff;
+            color: #1e2b32;
+            padding: 0.3rem 0.01rem;
+            border-radius: 6px;
+            border: 2px solid #1e2b32;
+            transition: all 0.3s ease;
+        }
+        /* NEW: Hover effect for the main button container */
+        .main-btn:hover {
+            background: #fff;
+            color: #1e2b32;
+            border-color: #1e2b32;
+        }
+        /* NEW: Hover effect for the sub button */
+        .main-btn:hover .sub-btn {
+            background: #1e2b32;
+            color: #fff;
+            border-color: #1e2b32;
+        }
+        /* Modal (fullscreen view) */
+        .modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .modal-content img {
+            max-width: 100%;
+            max-height: 70vh;
+            display: block;
+            border-radius: 12px;
+            margin: 0 20px;
+        }
+        .close-btn {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        /* Navigation arrows - NEW POSITIONING */
+        .lightbox-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            background: rgba(0,0,0,0);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            border: 2px solid white;
+            transition: background-color 0.3s ease;
+            /* NEW: Ensure arrows don't overlap image */
+            margin: 0 10px;
+        }
+        .lightbox-arrow:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .lightbox-arrow.left {
+            left: 0;
+        }
+        .lightbox-arrow.right {
+            right: 0;
+        }
+        /* Lightbox CTA button */
+        .lightbox-cta-button {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 1;
+            transition: all 0.3s ease;
+            /* NEW: Prevent text wrapping and ensure single line */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            /* NEW: Allow button to shrink but maintain aspect ratio */
+            min-width: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* NEW: Ensure consistent spacing */
+            margin: 0 10px;
+        }
+        .lightbox-cta-button:hover {
+            background-color: black;
+            color: white;
+            transform: translateX(-50%) scale(1.05);
+        }
+        /* NEW: Responsive adjustments */
+        @media (max-width: 768px) {
+            .modal-content img {
+                max-height: 60vh;
+                margin: 0 10px;
+            }
+            .lightbox-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+                margin: 0 5px;
+            }
+            .lightbox-cta-button {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+                min-width: 150px;
+            }
+            .close-btn {
+                top: -30px;
+                font-size: 24px;
+            }
+        }
+        @media (max-width: 480px) {
+            .modal-content img {
+                max-height: 50vh;
+                margin: 0 5px;
+            }
+            .lightbox-arrow {
+                width: 30px;
+                height: 30px;
+                font-size: 1.2rem;
+                margin: 0 3px;
+            }
+            .lightbox-cta-button {
+                padding: 4px 10px;
+                font-size: 0.7rem;
+                min-width: 120px;
+            }
+            .close-btn {
+                top: -25px;
+                font-size: 20px;
+            }
+        }
+        @media (max-width: 320px) {
+            .modal-content img {
+                max-height: 40vh;
+                margin: 0 3px;
+            }
+            .lightbox-arrow {
+                width: 25px;
+                height: 25px;
+                font-size: 1rem;
+                margin: 0 2px;
+            }
+            .lightbox-cta-button {
+                padding: 3px 8px;
+                font-size: 0.6rem;
+                min-width: 100px;
+            }
+        }
+        /* NEW: Main fix for preventing overlap */
+        @media (max-width: 1200px) {
+            .modal-content {
+                max-width: calc(100% - 100px); /* Reserve space for arrows */
+            }
+            .modal-content img {
+                max-width: calc(100% - 100px); /* Reserve space for arrows */
+            }
+        }
+        @media (max-width: 900px) {
+            .modal-content {
+                max-width: calc(100% - 80px); /* Reserve space for arrows */
+            }
+            .modal-content img {
+                max-width: calc(100% - 80px); /* Reserve space for arrows */
+            }
+        }
+        @media (max-width: 600px) {
+            .modal-content {
+                max-width: calc(100% - 60px); /* Reserve space for arrows */
+            }
+            .modal-content img {
+                max-width: calc(100% - 60px); /* Reserve space for arrows */
+            }
+        }
+        @media (max-width: 400px) {
+            .modal-content {
+                max-width: calc(100% - 40px); /* Reserve space for arrows */
+            }
+            .modal-content img {
+                max-width: calc(100% - 40px); /* Reserve space for arrows */
+            }
+        }
+        @media (max-width: 768px) {
+            .card {
+                width: 90%;
+                height: auto;
+            }
+        }
+        /* ===== WHO WE ARE SECTION STYLES ===== */
+        .who-we-are-section {
+            padding: 40px 20px;
+            text-align: center;
+            background-color: #fff;
+        }
+        .who-we-are-section h2 {
+            font-size: 2.5rem; /* Smaller than before */
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .who-we-are-section p {
+            font-size: 1rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .team {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .team-member {
+            display: flex;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .team-member.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .profile-img {
+            width: 195px; /* 1.3x bigger */
+            height: 195px;
+            border-radius: 50%;
+            background-color: #ccc;
+            margin-right: 20px;
+            flex-shrink: 0;
+            background-size: cover;
+            background-position: center;
+        }
+        .team-member h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .team-member h3.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .team-member p {
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        .social-icons {
+            margin-top: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .social-icons.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .social-icons img {
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        .social-icons .linkedin-img,
+        .social-icons .instagram-img {
+            width: 24px;
+            height: 24px;
+        }
+        .social-icons .youtube-img {
+            width: 40px;
+            height: auto;
+        }
+        .social-icons a {
+            text-decoration: none;
+        }
+        /* ===== GALLERY SECTION STYLES ===== */
+        .gallery-section {
+            background-color: #FFFFFF;
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .gallery-header h1 {
+            font-size: 48px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 20px;
+            color: black;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .gallery-header h1.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columns */
+            gap: 20px;
+            margin-top: 30px;
+            padding: 0 40px; /* Increased padding on sides */
+        }
+        .gallery-item {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            aspect-ratio: 4/3;
+            background-color: #f0f0f0;
+            position: relative;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .gallery-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        .gallery-item .location-tag {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.72rem; /* 0.9x smaller (0.8rem * 0.9) */
+            font-weight: 600;
+        }
+        /* ===== LIGHTBOX MODAL ===== */
+        .lightbox-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 80vh;
+            display: block;
+        }
+        .close-lightbox {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        /* Lightbox location text */
+        .lightbox-location {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem; /* 0.8x smaller (1rem * 0.8) */
+            font-weight: 600;
+            max-width: 80%;
+        }
+        /* ===== STICKY HEADER ===== */
+        .sticky-header {
+            position: fixed;
+            top: -80px; /* Hidden by default */
+            left: 0;
+            width: 100%;
+            background-color: #1A1A1A;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center; /* Center the logo */
+            align-items: center;
+            z-index: 999;
+            transition: top 0.3s ease;
+        }
+        .sticky-header .logo {
+            font-size: 1.2rem;
+            color: white;
+            text-decoration: none;
+        }
+        /* ===== FOOTER SECTION STYLES ===== */
+        .site-footer {
+            background-color: #1A1A1A;
+            padding: 50px 20px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .footer-nav {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        .footer-nav a {
+            font-size: 18px;
+            color: #FFFFFF;
+            text-decoration: none;
+            display: block;
+            margin: 10px 0;
+            transition: color 0.3s ease;
+        }
+        .footer-nav a:hover {
+            color: #B0B0B0;
+        }
+        .footer-nav a.brand {
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 20px;
+        }
+        .copyright {
+            font-size: 14px;
+            color: #999999;
+            text-align: left;
+        }
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            /* Header responsive */
+            .hero-content h1 {
+                font-size: 1.456rem; /* Reduced by 20% */
+            }
+            .hero-content .sub-text {
+                font-size: 3.2rem; /* Reduced by 20% */
+                transform: translate(-50%, 30%);
+            }
+            .logo {
+                font-size: 1.2rem;
+            }
+            /* Who We Are responsive */
+            .team {
+                flex-direction: column;
+            }
+            .team-member {
+                margin: 0 10px;
+            }
+            /* Travel App responsive - MOBILE LAYOUT */
+            .travel-app-section {
+                padding: 39px 20px; /* 1.3x padding */
+            }
+            .app-container {
+                flex-direction: column;
+                align-items: center; /* Center vertically */
+            }
+            .main-element {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+                padding: 0 20px;
+            }
+            .text-content {
+                max-width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center; /* Center horizontally */
+                text-align: center; /* Center text */
+                order: 3; /* Move text content below image */
+            }
+            .text-content h2 {
+                text-align: center;
+                order: -1; /* Move title to the top */
+            }
+            .app-description {
+                margin-left: 0;
+                max-width: 100%;
+                text-align: center;
+                font-size: 1rem; /* 80% of 1.25rem */
+            }
+            .mobile-line-break {
+                display: block;
+            }
+            .feature-buttons {
+                grid-template-columns: 1fr;
+                margin-left: 0;
+                max-width: 100%;
+                justify-content: center; /* Center buttons grid */
+                order: 2; /* Move buttons below title */
+                margin-bottom: 26.4px; /* 2.2x spacing */
+            }
+            .app-description {
+                order: 3; /* Move text below buttons */
+            }
+            .coming-soon {
+                text-align: center;
+                order: 4; /* Move "coming soon" to the bottom */
+            }
+            .feature-button {
+                width: 100%;
+                min-width: auto;
+                justify-content: center; /* Center button content */
+                /* Adjust hover state for mobile */
+                min-width: 354px;
+                min-height: 70px;
+            }
+            .feature-button:hover {
+                min-width: 354px; /* Maintain expansion on hover */
+                min-height: 70px;
+                 /* Mobile padding for hover content - minimal padding for full utilization */
+                padding: 15px 4px; /* Consistent with desktop for full width usage */
+            }
+            /* Mobile padding for hover text with minimal side padding */
+            .feature-button-hover-content {
+                padding: 10px 6px; /* Minimal side padding for maximum text space */
+                font-size: 0.9rem; /* Slightly larger font for mobile readability */
+                width: 94%; /* Use nearly full width on mobile */
+                max-width: 94%;
+            }
+            .image-content {
+                margin-left: 0;
+                margin-top: 30px;
+                max-width: 100%;
+                justify-content: center;
+                order: 1; /* Move image below title */
+            }
+            .phone-graphic {
+                transform: none;
+                max-width: 240px; /* 1.2x bigger for mobile */
+            }
+            /* Gallery responsive */
+            .gallery-section {
+                padding: 30px 10px;
+            }
+            .gallery-header h1 {
+                font-size: 36px;
+            }
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+                padding: 0 20px; /* Adjust padding for mobile */
+            }
+            .gallery-item .location-tag {
+                font-size: 0.5256rem; /* 73% of 0.72rem */
+            }
+            /* Footer responsive */
+            .site-footer {
+                padding: 30px 10px;
+                align-items: center; /* Center footer content */
+            }
+            .footer-nav {
+                text-align: center; /* Center nav links */
+            }
+            .footer-nav a {
+                font-size: 16px;
+            }
+            .footer-nav a.brand {
+                font-size: 20px;
+            }
+            .copyright {
+                font-size: 12px;
+                text-align: center; /* Center copyright */
+            }
+            /* Center the app title on mobile */
+            .app-title-sub {
+                text-align: center;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 1.2rem; /* Reduced by 20% */
+            }
+            .hero-content .sub-text {
+                font-size: 2.666rem; /* Reduced by 20% */
+                transform: translate(-50%, 40%);
+            }
+            .who-we-are-section h2 {
+                font-size: 2rem; /* 1.5x bigger */
+            }
+            .who-we-are-section p {
+                font-size: 0.9rem;
+            }
+            .team-member h3 {
+                font-size: 1rem;
+            }
+            .team-member p {
+                font-size: 0.75rem;
+            }
+            .profile-img {
+                width: 130px; /* 1.3x bigger */
+                height: 130px;
+            }
+            .social-icons .linkedin-img,
+            .social-icons .instagram-img {
+                width: 20px;
+                height: 20px;
+            }
+            .social-icons .youtube-img {
+                width: 32px;
+                height: auto;
+            }
+             /* Adjust feature buttons for very small screens */
+            .feature-button {
+                min-width: 354px;
+                min-height: 60px;
+                font-size: 0.8rem;
+                padding: 10px 12px;
+            }
+            .feature-button:hover {
+                min-width: 354px;
+                min-height: 60px;
+                padding: 12px 3px; /* Minimal side padding for maximum text utilization */
+                font-size: 0.9rem;
+            }
+            .feature-button-hover-content {
+                font-size: 0.82rem;
+                padding: 8px 4px; /* Minimal padding for full text utilization */
+                width: 92%; /* Use nearly full width */
+                max-width: 92%;
+            }
+        }
+        /* Specific styles for the two-line button */
+        .two-line-button .feature-button-content {
+            flex-direction: column;
+            gap: 2px; /* Space between lines */
+        }
+        /* Travel App Title Styles */
+        .app-title-main {
+            font-size: 1.5rem; /* Half of 3rem */
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        .app-title-sub {
+            font-size: 3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        /* Lightbox navigation controls */
+        .lightbox-navigation {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 0 20px;
+            z-index: 1;
+        }
+        .lightbox-arrow-navigation {
+            width: 40px;
+            height: 40px;
+            background-color: transparent; /* Transparent background */
+            border: 2px solid white; /* White border */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            color: white; /* White arrows */
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .lightbox-arrow-navigation:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .lightbox-counter {
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 5px 10px;
+            border-radius: 4px;
+            min-width: 60px;
+            text-align: center;
+        }
+        .lightbox-arrow-navigation.left {
+            left: 20px;
+        }
+        .lightbox-arrow-navigation.right {
+            right: 20px;
+        }
+        /* Fade elements for Start Your Journey section */
+        .start-journey-section .fade-element {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .start-journey-section .fade-element.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+    <style>
+        @media (max-width: 768px) {
+            .app-title-main,
+            .app-title-sub {
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== HEADER SECTION ===== -->
+    <!-- Hero section with sliding background images and navigation -->
+    <div class="hero-section" id="hero">
+        <div class="slider" id="slider">
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1605711217046-d3885ceb5fec?ixlib=rb-4.1.0&q=85&fm=jpg&crop=entropy&cs=srgb&w=4800'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1728223621746-a65fbaa283a3?q=80&w=3080&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1642928614293-ba6ff94b4a75?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1717293520171-b1d8b5d5e3f2?q=80&w=1666&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1662401420068-7876611f0ae9?q=80&w=2076&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1610263941001-6826c40db61d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>
+        </div>
+        <nav class="navbar">
+            <h1 class="logo">Those AweFull People</h1>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+        <div class="hero-content">
+            <h1>TRAVEL TO...</h1>
+            <div class="sub-text active">CONNECT</div>
+            <div class="sub-text">REFLECT</div>
+            <div class="sub-text">EMERGE YOUR<br>TRUE SELF</div>
+        </div>
+        <!-- Location Texts -->
+        <div class="location-text active">Plains of Bagan,<br>Myanmar, Asia</div>
+        <div class="location-text">Amboseli National Park,<br>Kenya, Africa</div>
+        <div class="location-text">Antarctica</div>
+        <div class="location-text">Great Barrier Reef,<br>Australia, Oceania</div>
+        <div class="location-text">Alaska, USA,<br>America</div>
+        <div class="location-text">Iceland,<br>Europe</div>
+        <div class="carousel-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+    </div>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="close-menu" id="closeMenu">×</div>
+        <a href="#hero" class="brand">Those AweFull People</a>
+        <a href="#travel-app">Your Travel Companion</a>
+        <a href="#start-journey">Start Your Journey</a>
+        <a href="#who-we-are">Who Are These AweFull People?</a>
+        <a href="#gallery">Gallery</a>
+    </div>
+    <!-- ===== STICKY HEADER ===== -->
+    <div class="sticky-header" id="stickyHeader">
+        <a href="#hero" class="logo">Those AweFull People</a>
+    </div>
+    <!-- ===== TRAVEL APP SECTION ===== -->
+    <!-- Travel app showcase with features and mockup -->
+    <section id="travel-app" class="travel-app-section">
+        <div class="app-container">
+            <div class="main-element">
+                <div class="image-content">
+                    <img src="https://lh3.googleusercontent.com/pw/AP1GczN3G8EeCh6j6vSSxBrC69AZQ35zpD8eSp2ANLCaG159YejS2m7YogzOvwhTT5tuUx8jZ7hrwxXmhmsdzT__nevB1oOv_M6y7tJN-pKgQwDhXl00pRa7I-JeemANSbHUAdpVZCRL3FwW4HFm2tgGMLIR=w1024-h1536-s-no-gm?authuser=0" alt="Travel App on Phone" class="phone-graphic fade-element" id="phoneGraphic">
+                </div>
+                <div class="text-content">
+                    <div class="app-title-main fade-element" id="appTitleMain">OUR APP...</div>
+                    <div class="app-title-sub fade-element" id="appTitleSub">YOUR TRAVEL COMPANION</div>
+                    <div class="feature-buttons">
+                        <div class="feature-button fade-element" data-delay="0.2">
+                            <div class="feature-button-content">Travel is more than a break...</div>
+                            <div class="feature-button-hover-content">...It Can Be a Breakthrough</div>
+                        </div>
+                        <div class="feature-button fade-element" data-delay="0.4">
+                            <div class="feature-button-content">Go for the views...</div>
+                            <div class="feature-button-hover-content">...Return With a New View of Yourself</div>
+                        </div>
+                        <div class="feature-button fade-element" data-delay="0.6">
+                            <div class="feature-button-content">Leave for adventure...</div>
+                            <div class="feature-button-hover-content">...Return With a Deeper Connection</div>
+                        </div>
+                        <div class="feature-button fade-element" data-delay="0.8">
+                            <div class="feature-button-content">Step away from routine...</div>
+                            <div class="feature-button-hover-content">...Step Into Who You're Meant to Be</div>
+                        </div>
+                        <div class="feature-button fade-element" data-delay="1.0">
+                            <div class="feature-button-content">See the world...</div>
+                            <div class="feature-button-hover-content">...And See Yourself More Clearly</div>
+                        </div>
+                    </div>
+                    <div class="app-description fade-element" id="appDescription">
+                        <span class="bold-line">Our travel app helps you to:</span>
+                        <span class="italic-line">→ Write your life story through travel</span>
+                        <span class="italic-line">→ Come home recharged and inspired</span>
+                        <span class="italic-line">→ Carry the power of awe-inspiring<span class="mobile-line-break"></span> moments into everyday life</span>
+                    </div>
+                    <p class="coming-soon fade-element" id="comingSoon">Coming soon...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ===== START YOUR JOURNEY SECTION ===== -->
+    <section id="start-journey" class="start-journey-section">
+        <section class="hero">
+            <h1 class="fade-element">START YOUR JOURNEY</h1>
+            <p class="fade-element">We build tools that help you…</p>
+            <!-- Carousel -->
+            <div class="carousel-wrapper">
+                <div class="carousel">
+                    <div class="card" data-secondary-image="https://images.unsplash.com/photo-1581072327097-d65a1cba1a45?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=4800" data-caption="Surfers">
+                        <img src="https://lh3.googleusercontent.com/pw/AP1GczPQ1cBba0AO8o6llvsn4dfzLB7BHTQv_ouaaezfO2lqL7os4RH-cPyibvPrO6dQCC4LHbNr4Av3dX9uD2YX3ck18-9Ve62e07jyi_Fz89a7-Z5gIP1Y1y8S0IxvLBVX5k_ySl9CxHkYKC9E5yJgg3iA=w2346-h1570-s-no-gm?authuser=0" alt="Surfers">
+                        <div class="overlay"></div>
+                    </div>
+                    <div class="card" data-secondary-image="https://images.unsplash.com/photo-1581072327097-d65a1cba1a45?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=4800" data-caption="Mountains">
+                        <img src="https://lh3.googleusercontent.com/pw/AP1GczM8XTvP06nmBAHt90BNv58TByIVqOWpYBPrKVKcgKOX20nRfjZiZD_OmXgsU0J43KDqUvH5OcFP7ZisyInTX_0uIBla3aiICPlVDFGu0LdSnJzvCsmmHjDmphuDh4oQ451O_9qgj903x5pnblGZ3-St=w2342-h1570-s-no-gm?authuser=0" alt="Mountains">
+                        <div class="overlay"></div>
+                    </div>
+                    <div class="card" data-secondary-image="https://images.unsplash.com/photo-1581072327097-d65a1cba1a45?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=4800" data-caption="Cliffs">
+                        <img src="https://lh3.googleusercontent.com/pw/AP1GczOYRGxBZFlmR1GY7nc47T8ABlHULuxyzw5H4xlr9lNKnW208seL_ct3MlmyfT7NjrRSH_O8Mku5k6UeDrhAsuYx0UM1I3w3-OSqksgpkSkz_xxklTmVOgQxQZq6wBFly4_7zwXdhKVCxHz-wSRgxStw=w2340-h1570-s-no-gm?authuser=0" alt="Cliffs">
+                        <div class="overlay"></div>
+                    </div>
+                    <div class="card" data-secondary-image="https://images.unsplash.com/photo-1581072327097-d65a1cba1a45?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=4800" data-caption="Ocean">
+                        <img src="https://lh3.googleusercontent.com/pw/AP1GczMafFIByV4BGDG0nq-L0iaHVzyP7Ju_DOsPFWv6d6EuWDBNamI9cc7XmgV2fsMr1iPIacg2ipOIvqpeiznWabEpG4Rek6EmxpbFZGNBvZfL8rJNOdhqUyovUkr0OSLG_VAo-DWkZEy0AsktGOdA9f9R=w2348-h1570-s-no-gm?authuser=0" alt="Ocean">
+                        <div class="overlay"></div>
+                    </div>
+                    <div class="card" data-secondary-image="https://images.unsplash.com/photo-1581072327097-d65a1cba1a45?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=4800" data-caption="Mountain Peak">
+                        <img src="https://lh3.googleusercontent.com/pw/AP1GczMwzg_746JtG4qf18Iu2kAertEHCfjbrEq-__XHuntwvM1iUM0xUCF9PGPhYWuvVRT7lsUJKKEiL-EIy3SwSiiPjrhMQaRdsmyEa-LI_BZuVtrYZsyzYHCSI7Ib-jBykdi9W_awXRp0i8Kx_-p4ilER=w2340-h1570-s-no-gm?authuser=0" alt="Mountain Peak">
+                        <div class="overlay"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Pagination -->
+            <div class="pagination">
+                <span class="dot-pagination active"></span>
+                <span class="dot-pagination"></span>
+                <span class="dot-pagination"></span>
+                <span class="dot-pagination"></span>
+                <span class="dot-pagination"></span>
+            </div>
+            <!-- CTA -->
+            <div class="cta">
+                <p class="fade-element">Currently building...</p>
+                <button class="main-btn fade-element">
+                    YOUR TRAVEL COMPANION
+                    <span class="sub-btn">JOIN THE WAITLIST</span>
+                </button>
+            </div>
+        </section>
+        <!-- Modal for fullscreen view -->
+        <div class="modal" id="imageModal">
+            <!-- Left Navigation Arrow -->
+            <button class="lightbox-arrow left" id="prevButton">&#10094;</button>
+            <!-- Right Navigation Arrow -->
+            <button class="lightbox-arrow right" id="nextButton">&#10095;</button>
+            <div class="modal-content">
+                <button class="close-btn" id="closeModal">&times;</button>
+                <img id="modalImage" src="" alt="">
+                <!-- CTA Button -->
+                <button class="lightbox-cta-button" id="ctaButton">
+                    Become An AweFull Person...
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- ===== WHO WE ARE SECTION ===== -->
+    <!-- Team introduction with profiles and social links -->
+    <section id="who-we-are" class="who-we-are-section">
+        <h2>WHO ARE THESE AWEFULL PEOPLE?</h2>
+        <p>We are a group of people who have been deeply impacted by the experiences of awe, connection, reflection and traveling. Through our work, we seek to expand these experiences and their positive effects.</p>
+        <div class="team">
+            <div class="team-member">
+                <div class="profile-img" style="background-image: url('https://lh3.googleusercontent.com/pw/AP1GczO9pHvUYTH5S42JlXfTtnGfrbMXAgD-8DOpGgzADTaCnbREjxriT_s3HLCGKjCPyvyKIWt2QO4fvD4t1boysZaLlFZmyRlEkZSVuEoKRKrE3D0QcXCfvqoklB22ncLfVkAbd6lnU9PJXYlskQlW4M-V=w1600-h1200-s-no-gm?authuser=0');"></div>
+                <div>
+                    <h3>Glenn Astofi</h3>
+                    <p>Seasoned entrepreneur and executive with a track record of success across diverse industries, including technology, financial services, brick and mortar and online retail. He has held senior leadership roles in startups and large public companies, specializing in finance, business strategy, and innovation-driven capital fundraising.</p>
+                    <div class="social-icons">
+                        <a href="https://www.linkedin.com/in/glennastolfi/" target="_blank">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png?20140125013055" alt="LinkedIn" class="linkedin-img">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="team-member">
+                <div class="profile-img" style="background-image: url('https://lh3.googleusercontent.com/pw/AP1GczN4mwRTYhJ1w3G7l9iV0yXi-GTWl_jjSpGS9mRVDF4g2vok86km5yHXez-HoB9i7BNGsnjek_LNpkRgSjt-2wkmydPc0c3diKt67GRVreWJIcr-U3d7OuJaANK9Af4ZHpsCkTEqi-2TILp1w_nIVuy4=w1178-h1570-s-no-gm?authuser=0');"></div>
+                <div>
+                    <h3>Emiliano Sigales</h3>
+                    <p>Multidisciplinary entrepreneur and podcaster passionate about transforming ideas into real projects. Emiliano develops digital and tech-driven solutions for international clients, blending business development, marketing, and systems engineering with a global outlook and curiosity for science, philosophy, and culture.</p>
+                    <div class="social-icons">
+                        <a href="https://www.linkedin.com/in/emiliano-sigales-6328a1227" target="_blank">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png?20140125013055" alt="LinkedIn" class="linkedin-img">
+                        </a>
+                        <a href="https://www.instagram.com/coffeelounge_e/" target="_blank">
+                            <img src="https://dreamfoundry.org/wp-content/uploads/2018/12/instagram-logo-png-transparent-background.png" alt="Instagram" class="instagram-img">
+                        </a>
+                        <a href="https://www.youtube.com/@CoffeeLoungeEmilianoSigales" target="_blank">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" alt="YouTube" class="youtube-img">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ===== GALLERY SECTION ===== -->
+    <section id="gallery" class="gallery-section">
+        <div class="gallery-header">
+            <h1>GALLERY</h1>
+        </div>
+        <div class="gallery-grid">
+            <!-- Gallery items with actual images and location tags -->
+            <div class="gallery-item" data-image="https://lh3.googleusercontent.com/pw/AP1GczOH04b191lSJr5zp3cTpvJkV8bIwLk7NLOadmiW_JV_FRQpnL9L7HeOQ4OWl1JP4NfO-cM9ppOxrtKjP_-xmjD4Sq-vpz-dQIGaYtneTVnJeh01zk28pTHSM5eP_gfH3dFSFRPzUDPiqTMCndLtUIoI=w2048-h1536-s-no-gm?authuser=0" data-location="Cozumel, Mexico, America">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczOH04b191lSJr5zp3cTpvJkV8bIwLk7NLOadmiW_JV_FRQpnL9L7HeOQ4OWl1JP4NfO-cM9ppOxrtKjP_-xmjD4Sq-vpz-dQIGaYtneTVnJeh01zk28pTHSM5eP_gfH3dFSFRPzUDPiqTMCndLtUIoI=w2048-h1536-s-no-gm?authuser=0" alt="Cozumel, Mexico">
+                <div class="location-tag">Cozumel, Mexico, America</div>
+            </div>
+            <div class="gallery-item" data-image="https://lh3.googleusercontent.com/pw/AP1GczOGUgUQgl8FabRCAXNaY4QllzHj1YnubCw9x7NJ9Wvq6LeO8jeAwdn4XJv9U-ehHyxGKwui2X2BAb6RjOcyZupgLrBsfAhV5p8Fd6TBUUpTxlV7jUG2fn9Z_KkQ9YEimCZbtpufeqYzSqCL3Sdkvj-K=w1600-h1200-s-no-gm?authuser=0" data-location="Foscoe, NC, USA, America">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczOGUgUQgl8FabRCAXNaY4QllzHj1YnubCw9x7NJ9Wvq6LeO8jeAwdn4XJv9U-ehHyxGKwui2X2BAb6RjOcyZupgLrBsfAhV5p8Fd6TBUUpTxlV7jUG2fn9Z_KkQ9YEimCZbtpufeqYzSqCL3Sdkvj-K=w1600-h1200-s-no-gm?authuser=0" alt="Foscoe, NC">
+                <div class="location-tag">Foscoe, NC, USA, America</div>
+            </div>
+            <div class="gallery-item" data-image="https://lh3.googleusercontent.com/pw/AP1GczOzSx-uT01LMVn1Ok1lMX8A6ptn13mDUrSkBesrrqdc6iuSYQz86GrkHDPnA5zUSD8--jTjGyOcbn_n_hmVrmC0NjsnxrhQeBMEGBk8TM1yPdzaL6zCHADNSbvHqiRhDy1jasJej-UE_t7t83MmQIsS=w2094-h1570-s-no-gm?authuser=0" data-location="Mount Batur, Indonesia, Asia">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczOzSx-uT01LMVn1Ok1lMX8A6ptn13mDUrSkBesrrqdc6iuSYQz86GrkHDPnA5zUSD8--jTjGyOcbn_n_hmVrmC0NjsnxrhQeBMEGBk8TM1yPdzaL6zCHADNSbvHqiRhDy1jasJej-UE_t7t83MmQIsS=w2094-h1570-s-no-gm?authuser=0" alt="Mount Batur, Indonesia">
+                <div class="location-tag">Mount Batur, Indonesia, Asia</div>
+            </div>
+            <div class="gallery-item" data-image="https://lh3.googleusercontent.com/pw/AP1GczNrgsUOILRuA37LjExhEFAFRSKiB8VrJqO7_bONGGpEe2WZWk4i2fAzbg63ZbFDqE_kxcSPpVwpKOZeva38p2BRMslFBpMfpMUuXOJ0SSkFJQqMqtbe-K8FaKXENF9pMcSW4polU_sCigowvMnWoxKm=w1600-h1200-s-no-gm?authuser=0" data-location="Boone, NC, USA, America">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczNrgsUOILRuA37LjExhEFAFRSKiB8VrJqO7_bONGGpEe2WZWk4i2fAzbg63ZbFDqE_kxcSPpVwpKOZeva38p2BRMslFBpMfpMUuXOJ0SSkFJQqMqtbe-K8FaKXENF9pMcSW4polU_sCigowvMnWoxKm=w1600-h1200-s-no-gm?authuser=0" alt="Boone, NC">
+                <div class="location-tag">Boone, NC, USA, America</div>
+            </div>
+            <div class="gallery-item" data-image="https://lh3.googleusercontent.com/pw/AP1GczNfssDAOy30-d4odqtth9RK5o4s9DezAuKAxQYhps_3__t2_re1CBZ0r1oDwJ2wvIyi6BCqT19DOrwChlx3LitV1uC5pOOnYJJUqBCo7Mls3977Q3z5LEcGXT6XwmY4KkSVk21PM00ntIAsoh8WwamB=w2059-h1372-s-no-gm?authuser=0" data-location="Manuel Antonio, Costa Rica, America">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczNfssDAOy30-d4odqtth9RK5o4s9DezAuKAxQYhps_3__t2_re1CBZ0r1oDwJ2wvIyi6BCqT19DOrwChlx3LitV1uC5pOOnYJJUqBCo7Mls3977Q3z5LEcGXT6XwmY4KkSVk21PM00ntIAsoh8WwamB=w2059-h1372-s-no-gm?authuser=0" alt="Manuel Antonio, Costa Rica">
+                <div class="location-tag">Manuel Antonio, Costa Rica, America</div>
+            </div>
+            <div class="gallery-item" data-image="https://lh3.googleusercontent.com/pw/AP1GczOFat1HA0KAeP1txp-FddjTZviCk8WisJexVuKpmOmXaIIecvBe03MRCXGBvW_-DRYqtSkubW8yAlbPlyQFEMkHrUdjQ37BAOAT9g7dk0S6Ya19PJQirrzhXOJbqvbPPxJ2UVq6vufTVF9_soMJVjU7=w1178-h1570-s-no-gm?authuser=0" data-location="Vail, CO, USA, America">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczOFat1HA0KAeP1txp-FddjTZviCk8WisJexVuKpmOmXaIIecvBe03MRCXGBvW_-DRYqtSkubW8yAlbPlyQFEMkHrUdjQ37BAOAT9g7dk0S6Ya19PJQirrzhXOJbqvbPPxJ2UVq6vufTVF9_soMJVjU7=w1178-h1570-s-no-gm?authuser=0" alt="Vail, CO">
+                <div class="location-tag">Vail, CO, USA, America</div>
+            </div>
+            <div class="gallery-item" data-image="https://lh3.googleusercontent.com/pw/AP1GczOrK6mHU0frUPS-9_blHs_X2nb5zkcDornk6pg5cF4PZ1KdVltGRencAj3-41_n9z-nrlbzLJkZn6ZpiXWOaGoT0Cm1Kfzb34Eh3PvLodeM1-mCrAZReq8OosEHig_j5GE_3dQ1vMm_E__lGdSLT-k9=w1178-h1570-s-no-gm?authuser=0" data-location="Manhattan, NY, USA, America">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczOrK6mHU0frUPS-9_blHs_X2nb5zkcDornk6pg5cF4PZ1KdVltGRencAj3-41_n9z-nrlbzLJkZn6ZpiXWOaGoT0Cm1Kfzb34Eh3PvLodeM1-mCrAZReq8OosEHig_j5GE_3dQ1vMm_E__lGdSLT-k9=w1178-h1570-s-no-gm?authuser=0" alt="Manhattan, NY">
+                <div class="location-tag">Manhattan, NY, USA, America</div>
+            </div>
+            <div class="gallery-item" data-image="https://lh3.googleusercontent.com/pw/AP1GczOGo0hJYadvaJ-3f9UkIYGfrIMYxU53bk_EJzxGLB3LaosQwsyuWuEo3Pn7z5AV1Pa4I1n3jelMTv4K2FDPxyxcyd-THGzDgBUJE1FkcOVqnAw3feaYOQ1wkBumLhBb1iWZa3M1xjgP7RkxJyj8BtAz=w1600-h1200-s-no-gm?authuser=0" data-location="Stuart, FL, USA, America">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczOGo0hJYadvaJ-3f9UkIYGfrIMYxU53bk_EJzxGLB3LaosQwsyuWuEo3Pn7z5AV1Pa4I1n3jelMTv4K2FDPxyxcyd-THGzDgBUJE1FkcOVqnAw3feaYOQ1wkBumLhBb1iWZa3M1xjgP7RkxJyj8BtAz=w1600-h1200-s-no-gm?authuser=0" alt="Stuart, FL">
+                <div class="location-tag">Stuart, FL, USA, America</div>
+            </div>
+            <div class="gallery-item" data-image="https://lh3.googleusercontent.com/pw/AP1GczOB36qFfaCeOYVFXb1YZFUhsCmZYrPonniyqPb0iWTs9kFud5gDVo1HN7I4L_HBAp5mo9g1WGEmiiCfUA8Q5OCwOuu85Ouy9oVV8srz36eep6xqmfD17P7OlfDRKcTsSg-DgYb2hZJ0B67bwob8aUJE=w828-h975-s-no-gm?authuser=0" data-location="Barcelona, Spain, Europe">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczOB36qFfaCeOYVFXb1YZFUhsCmZYrPonniyqPb0iWTs9kFud5gDVo1HN7I4L_HBAp5mo9g1WGEmiiCfUA8Q5OCwOuu85Ouy9oVV8srz36eep6xqmfD17P7OlfDRKcTsSg-DgYb2hZJ0B67bwob8aUJE=w828-h975-s-no-gm?authuser=0" alt="Barcelona, Spain">
+                <div class="location-tag">Barcelona, Spain, Europe</div>
+            </div>
+            <div class="gallery-item" data-image="https://lh3.googleusercontent.com/pw/AP1GczPN2FMVtVq2qt8sIY1WH9rOMgvuRph4LNJjFrtrlLu1dDJH3UKv5ZfKC-_VWLJvGLzQmRjzEnTa3n6NHVXX514DGGM4YSMWab8HctC-z1EbVnDXmb-W0nkGUE22cjyVLFVlQQxz3nDsannDZ-P6AeIf=w1178-h1570-s-no-gm?authuser=0" data-location="Venice, Italy, Europe">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczPN2FMVtVq2qt8sIY1WH9rOMgvuRph4LNJjFrtrlLu1dDJH3UKv5ZfKC-_VWLJvGLzQmRjzEnTa3n6NHVXX514DGGM4YSMWab8HctC-z1EbVnDXmb-W0nkGUE22cjyVLFVlQQxz3nDsannDZ-P6AeIf=w1178-h1570-s-no-gm?authuser=0" alt="Venice, Italy">
+                <div class="location-tag">Venice, Italy, Europe</div>
+            </div>
+            <div class="gallery-item" data-image="https://lh3.googleusercontent.com/pw/AP1GczOJuBDLPSBnfJ6Cd2i9jqYmmY4TTCA-1WqcUFg8xGDsKge_1q2Nkwl9iilExKY3NTRxXAoRZ7RO617t8GkA-MYJfL8VgjQtMF6FOOcnzbQUrvXb_3ri2_wZwwfsqdGpqldhVkD3A2q2QybS8S915j3Y=w1178-h1570-s-no-gm?authuser=0" data-location="Bali, Indonesia, Asia">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczOJuBDLPSBnfJ6Cd2i9jqYmmY4TTCA-1WqcUFg8xGDsKge_1q2Nkwl9iilExKY3NTRxXAoRZ7RO617t8GkA-MYJfL8VgjQtMF6FOOcnzbQUrvXb_3ri2_wZwwfsqdGpqldhVkD3A2q2QybS8S915j3Y=w1178-h1570-s-no-gm?authuser=0" alt="Bali, Indonesia">
+                <div class="location-tag">Bali, Indonesia, Asia</div>
+            </div>
+            <div class="gallery-item" data-image="https://lh3.googleusercontent.com/pw/AP1GczM3soWqABRgRH7VXPQMxR0lFJ7S4W8cZMx7C3V8o4iFytKzGYPnu45fBrmHwve2xME8F6TQPYj_k_ArJseWUIuAXrWHcrGKON4sNef4Wm17qKMUvL0mHQjtiE-0qTh_mJNSoqsvpznjWeR98rZ4d5jS=w1600-h1200-s-no-gm?authuser=0" data-location="Linville Gorge, NC, USA, America">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczM3soWqABRgRH7VXPQMxR0lFJ7S4W8cZMx7C3V8o4iFytKzGYPnu45fBrmHwve2xME8F6TQPYj_k_ArJseWUIuAXrWHcrGKON4sNef4Wm17qKMUvL0mHQjtiE-0qTh_mJNSoqsvpznjWeR98rZ4d5jS=w1600-h1200-s-no-gm?authuser=0" alt="Linville Gorge, NC">
+                <div class="location-tag">Linville Gorge, NC, USA, America</div>
+            </div>
+        </div>
+    </section>
+    <!-- ===== LIGHTBOX MODAL ===== -->
+    <div class="lightbox-modal" id="lightboxModal">
+        <div class="lightbox-content">
+            <button class="close-lightbox" id="closeLightbox">&times;</button>
+            <img id="lightboxImage" src="" alt="">
+            <div class="lightbox-location" id="lightboxLocation"></div>
+            </div>
+             <!-- Navigation controls -->
+             <div class="lightbox-navigation">
+                <button class="lightbox-arrow-navigation left" id="prevButtonGallery">&#10094;</button>
+                <div class="lightbox-counter" id="lightboxCounter">1/12</div>
+                <button class="lightbox-arrow-navigation right" id="nextButtonGallery">&#10095;</button>
+        </div>
+    </div>
+    <!-- ===== FOOTER SECTION ===== -->
+    <!-- Navigation links and copyright information -->
+    <footer class="site-footer">
+        <div class="footer-nav">
+            <a href="#hero" class="brand">Those AweFull People</a>
+            <a href="#travel-app">Your Travel Companion</a>
+            <a href="#start-journey">Start Your Journey</a>
+            <a href="#who-we-are">Who Are These AweFull People?</a>
+            <a href="#gallery">Gallery</a>
+        </div>
+        <p class="copyright">
+            © 2025 Those AweFull People. All rights reserved.
+        </p>
+    </footer>
+    <script>
+        // ===== HEADER SECTION JAVASCRIPT =====
+        // Hamburger Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const closeMenu = document.getElementById('closeMenu');
+        const menuLinks = mobileMenu.querySelectorAll('a');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+        closeMenu.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+        });
+        // Close menu when clicking on a link
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+        // Close menu when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!hamburger.contains(event.target) && !mobileMenu.contains(event.target) && mobileMenu.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            }
+        });
+        // Carousel Functionality with Slide Transition
+        const slider = document.getElementById('slider');
+        const dots = document.querySelectorAll('.dot');
+        const subTexts = document.querySelectorAll('.sub-text');
+        const locationTexts = document.querySelectorAll('.location-text');
+        let currentIndex = 0;
+        const totalSlides = 6;
+        // Touch swipe functionality
+        let startX = 0;
+        let endX = 0;
+        let startY = 0;
+        let endY = 0;
+        let isScrolling = false;
+        slider.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+            isScrolling = false;
+        });
+        slider.addEventListener('touchmove', (e) => {
+            // Check if user is trying to scroll vertically
+            if (!isScrolling) {
+                const moveX = e.touches[0].clientX;
+                const moveY = e.touches[0].clientY;
+                const diffX = Math.abs(moveX - startX);
+                const diffY = Math.abs(moveY - startY);
+                // If vertical movement is greater, allow page scrolling
+                if (diffY > diffX) {
+                    isScrolling = true;
+                    return;
+                }
+                // Prevent default only for horizontal swipes
+                e.preventDefault();
+            }
+            endX = e.touches[0].clientX;
+        });
+        slider.addEventListener('touchend', () => {
+            if (isScrolling) return;
+            const diff = startX - endX;
+            const threshold = 50; // Minimum swipe distance
+            if (Math.abs(diff) > threshold) {
+                if (diff > 0) {
+                    // Swipe left - next slide
+                    currentIndex = (currentIndex + 1) % totalSlides;
+                } else {
+                    // Swipe right - previous slide
+                    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+                }
+                updateCarousel();
+            }
+        });
+        function updateCarousel() {
+            const offset = -currentIndex * (100 / totalSlides);
+            slider.style.transform = `translateX(${offset}%)`;
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+            // Update sub-texts
+            subTexts.forEach((text, index) => {
+                text.classList.remove('active');
+            });
+            // Determine which sub-text to show (order: CONNECT, REFLECT, EMERGE YOUR TRUE SELF)
+            const subTextOrder = [0, 1, 2, 0, 1, 2]; // CONNECT, REFLECT, EMERGE, then repeat
+            const subTextIndex = subTextOrder[currentIndex];
+            subTexts[subTextIndex].classList.add('active');
+            // Update location texts
+            locationTexts.forEach((text, index) => {
+                text.classList.remove('active');
+            });
+            locationTexts[currentIndex].classList.add('active');
+        }
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentIndex = index;
+                updateCarousel();
+            });
+        });
+        // Auto-slide every 4 seconds (reduced by 1 second)
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            updateCarousel();
+        }, 4000);
+        // Initialize carousel
+        updateCarousel();
+        // ===== TRAVEL APP SECTION JAVASCRIPT =====
+        // Button Click Functionality for app features
+        document.querySelectorAll('.feature-button').forEach(button => {
+            button.addEventListener('click', () => {
+                alert('This feature is coming soon!');
+            });
+        });
+        // ===== START YOUR JOURNEY SECTION JAVASCRIPT =====
+        const carousel = document.querySelector('.carousel');
+        const dotsPagination = document.querySelectorAll('.dot-pagination');
+        const cards = document.querySelectorAll('.card');
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const closeModal = document.getElementById('closeModal');
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        const ctaButton = document.getElementById('ctaButton');
+        let currentIndexCarousel = 0;
+        let slideInterval;
+        let currentModalIndex = 0;
+        // Store original card indices for proper navigation
+        const originalCards = Array.from(cards);
+        // Duplicate cards for infinite loop effect
+        const duplicateCards = [...cards].map(card => card.cloneNode(true));
+        duplicateCards.forEach(card => {
+            carousel.appendChild(card);
+        });
+        // Add more duplicates to ensure smooth looping
+        const moreDuplicateCards = [...cards].map(card => card.cloneNode(true));
+        moreDuplicateCards.forEach(card => {
+            carousel.appendChild(card);
+        });
+        function updateCarouselNew() {
+            const cardWidth = cards[0].offsetWidth + 20; // include margin
+            const offset = (window.innerWidth / 2) - (cardWidth / 2) - (currentIndexCarousel * cardWidth);
+            carousel.style.transform = `translateX(${offset}px)`;
+            dotsPagination.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndexCarousel % cards.length);
+            });
+        }
+        dotsPagination.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentIndexCarousel = index;
+                updateCarouselNew();
+            });
+        });
+        // Click to open modal - FIXED VERSION
+        // We need to attach event listeners to ALL cards including duplicates
+        function attachCardEventListeners() {
+            const allCards = document.querySelectorAll('.card');
+            allCards.forEach((card, index) => {
+                card.addEventListener('click', (e) => {
+                    // Find the original card index by checking data attributes or position
+                    const originalIndex = Array.from(originalCards).indexOf(card);
+                    // If we found the card in original cards, use it
+                    if (originalIndex !== -1) {
+                        const secondaryImage = card.dataset.secondaryImage;
+                        const caption = card.dataset.caption;
+                        modalImage.src = secondaryImage;
+                        modal.style.display = 'flex';
+                        currentModalIndex = originalIndex;
+                    } else {
+                        // If not found in original cards, find the nearest original card
+                        // This handles the case where we clicked on a duplicated card
+                        const cardRect = card.getBoundingClientRect();
+                        const carouselRect = carousel.getBoundingClientRect();
+                        // Calculate which original card this corresponds to
+                        const relativePosition = cardRect.left - carouselRect.left;
+                        const cardWidth = cards[0].offsetWidth + 20;
+                        const calculatedIndex = Math.floor(relativePosition / cardWidth);
+                        // Adjust for the fact that we have duplicates at the beginning
+                        const adjustedIndex = (calculatedIndex + cards.length) % cards.length;
+                        const originalCard = originalCards[adjustedIndex];
+                        if (originalCard) {
+                            const secondaryImage = originalCard.dataset.secondaryImage;
+                            const caption = originalCard.dataset.caption;
+                            modalImage.src = secondaryImage;
+                            modal.style.display = 'flex';
+                            currentModalIndex = adjustedIndex;
+                        }
+                    }
+                });
+            });
+        }
+        // Call this function to attach event listeners to all cards
+        attachCardEventListeners();
+        // Close modal
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+        // Navigation buttons
+        prevButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentModalIndex = (currentModalIndex - 1 + originalCards.length) % originalCards.length;
+            const card = originalCards[currentModalIndex];
+            const secondaryImage = card.dataset.secondaryImage;
+            modalImage.src = secondaryImage;
+        });
+        nextButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentModalIndex = (currentModalIndex + 1) % originalCards.length;
+            const card = originalCards[currentModalIndex];
+            const secondaryImage = card.dataset.secondaryImage;
+            modalImage.src = secondaryImage;
+        });
+        // CTA Button functionality
+        ctaButton.addEventListener('click', () => {
+            alert('Thank you for your interest! Join our waitlist to become an AweFull Person.');
+        });
+        // Auto-slide functionality with infinite loop
+        function startAutoSlide() {
+            slideInterval = setInterval(() => {
+                currentIndexCarousel++;
+                updateCarouselNew();
+                // Reset to first set after reaching the end
+                if (currentIndexCarousel >= cards.length * 2) {
+                    setTimeout(() => {
+                        currentIndexCarousel = cards.length;
+                        carousel.style.transition = 'none';
+                        updateCarouselNew();
+                        setTimeout(() => {
+                            carousel.style.transition = 'transform 0.5s ease-in-out';
+                        }, 50);
+                    }, 50);
+                }
+            }, 4000); // 4 seconds instead of 5
+        }
+        // Pause auto-slide when hovering over carousel
+        const carouselWrapper = document.querySelector('.carousel-wrapper');
+        carouselWrapper.addEventListener('mouseenter', () => {
+            clearInterval(slideInterval);
+        });
+        carouselWrapper.addEventListener('mouseleave', () => {
+            startAutoSlide();
+        });
+        // Initialize with correct positioning (image 1 should have image 5 on its left)
+        window.addEventListener('load', () => {
+            // Set initial position to show first card in center
+            // But offset by the number of duplicated cards to achieve desired starting arrangement
+            currentIndexCarousel = cards.length; // Start at the first real card position
+            updateCarouselNew();
+        });
+        window.addEventListener('resize', updateCarouselNew);
+        // Start auto-sliding
+        startAutoSlide();
+        // ===== WHO WE ARE SECTION JAVASCRIPT =====
+        // Scroll animation for team members
+        document.addEventListener('DOMContentLoaded', () => {
+            const teamMembers = document.querySelectorAll('.team-member');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        // Add visible class to child elements with delay
+                        const children = entry.target.querySelectorAll('h3, p, .social-icons');
+                        children.forEach((child, index) => {
+                            setTimeout(() => {
+                                child.classList.add('visible');
+                            }, index * 200); // Stagger the animations
+                        });
+                    }
+                });
+            }, { threshold: 0.1 });
+            teamMembers.forEach(member => {
+                observer.observe(member);
+            });
+            // Observe the main section elements
+            const sectionElements = document.querySelectorAll('#who-we-are h2, #who-we-are > p');
+            sectionElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+        // ===== GALLERY SECTION JAVASCRIPT =====
+        // Scroll animation for gallery section with fade-in effect
+        document.addEventListener('DOMContentLoaded', () => {
+            const galleryHeader = document.querySelector('.gallery-header h1');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (entry.target === galleryHeader) {
+                            entry.target.classList.add('visible');
+                        } else {
+                            // Add visible class to gallery items with staggered delay
+                            setTimeout(() => {
+                                entry.target.classList.add('visible');
+                            }, Array.from(galleryItems).indexOf(entry.target) * 100);
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+            observer.observe(galleryHeader);
+            galleryItems.forEach(item => {
+                observer.observe(item);
+            });
+        });
+        // ===== TRAVEL APP SECTION ANIMATION =====
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get all fade elements in the travel app section
+            const phoneGraphic = document.getElementById('phoneGraphic');
+            const appTitleMain = document.getElementById('appTitleMain');
+            const appTitleSub = document.getElementById('appTitleSub');
+            const featureButtons = document.querySelectorAll('.feature-button');
+            const appDescription = document.getElementById('appDescription');
+            const comingSoon = document.getElementById('comingSoon');
+            // Create array in the order we want them to fade in
+            const fadeElements = [
+                phoneGraphic,
+                appTitleMain,
+                appTitleSub,
+                ...Array.from(featureButtons),
+                appDescription,
+                comingSoon
+            ];
+            // Create observer for the travel app section
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Fade in elements one by one with delay
+                        fadeElements.forEach((element, index) => {
+                            setTimeout(() => {
+                                element.classList.add('visible');
+                            }, index * 200); // 200ms delay between each element
+                        });
+                        // Stop observing after triggering
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            // Observe the main element container
+            const mainElement = document.querySelector('.main-element');
+            observer.observe(mainElement);
+        });
+        // ===== START YOUR JOURNEY SECTION ANIMATION =====
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get all fade elements in the start journey section
+            const startJourneyElements = document.querySelectorAll('.start-journey-section .fade-element');
+            
+            // Create observer for the start journey section
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Fade in elements one by one with delay
+                        startJourneyElements.forEach((element, index) => {
+                            setTimeout(() => {
+                                element.classList.add('visible');
+                            }, index * 200); // 200ms delay between each element
+                        });
+                        // Stop observing after triggering
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            // Observe the hero container in the start journey section
+            const startJourneyHero = document.querySelector('.start-journey-section .hero');
+            observer.observe(startJourneyHero);
+        });
+        // ===== LIGHTBOX FUNCTIONALITY =====
+        document.addEventListener('DOMContentLoaded', () => {
+            const lightboxModal = document.getElementById('lightboxModal');
+            const lightboxImage = document.getElementById('lightboxImage');
+            const lightboxLocation = document.getElementById('lightboxLocation');
+            const closeLightbox = document.getElementById('closeLightbox');
+            const prevButtonGallery = document.getElementById('prevButtonGallery');
+            const nextButtonGallery = document.getElementById('nextButtonGallery');
+            const lightboxCounter = document.getElementById('lightboxCounter');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            // Store the images and locations in an array
+            const galleryData = [];
+            galleryItems.forEach(item => {
+                galleryData.push({
+                    image: item.getAttribute('data-image'),
+                    location: item.getAttribute('data-location')
+                });
+            });
+            // Track current index
+            let currentIndex = 0;
+            // Open lightbox when clicking on gallery item
+            galleryItems.forEach((item, index) => {
+                item.addEventListener('click', () => {
+                    currentIndex = index;
+                    lightboxImage.src = galleryData[index].image;
+                    lightboxLocation.textContent = galleryData[index].location;
+                    updateCounter();
+                    lightboxModal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+                });
+            });
+            // Update the counter display
+            function updateCounter() {
+                lightboxCounter.textContent = `${currentIndex + 1}/${galleryData.length}`;
+            }
+            // Previous button functionality
+            prevButtonGallery.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length;
+                lightboxImage.src = galleryData[currentIndex].image;
+                lightboxLocation.textContent = galleryData[currentIndex].location;
+                updateCounter();
+            });
+            // Next button functionality
+            nextButtonGallery.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % galleryData.length;
+                lightboxImage.src = galleryData[currentIndex].image;
+                lightboxLocation.textContent = galleryData[currentIndex].location;
+                updateCounter();
+            });
+            // Close lightbox when clicking close button
+            closeLightbox.addEventListener('click', () => {
+                lightboxModal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Restore scrolling
+            });
+            // Close lightbox when clicking outside the image
+            lightboxModal.addEventListener('click', (event) => {
+                if (event.target === lightboxModal) {
+                    lightboxModal.style.display = 'none';
+                    document.body.style.overflow = 'auto'; // Restore scrolling
+                }
+            });
+        });
+        // ===== STICKY HEADER FUNCTIONALITY =====
+        document.addEventListener('DOMContentLoaded', () => {
+            const stickyHeader = document.getElementById('stickyHeader');
+            const heroSection = document.getElementById('hero');
+            let lastScrollTop = 0;
+            // Show/hide sticky header based on scroll direction and position
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const heroHeight = heroSection.offsetHeight;
+                // Only show sticky header when scrolled past hero section
+                if (scrollTop > heroHeight) {
+                    if (scrollTop > lastScrollTop && scrollTop > heroHeight + 100) {
+                        // Scrolling down
+                        stickyHeader.style.top = '-80px';
+                    } else {
+                        // Scrolling up
+                        stickyHeader.style.top = '0';
+                    }
+                } else {
+                    // At the top (in hero section), hide sticky header
+                    stickyHeader.style.top = '-80px';
+                }
+                lastScrollTop = scrollTop;
+            });
+        });
+    </script>
+</body>
+</html>
