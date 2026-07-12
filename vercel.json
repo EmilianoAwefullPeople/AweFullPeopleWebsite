@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/journeyonwardapp", "destination": "/journeyonwardapp/index.html" },
+    { "source": "/journeyonwardapp/(.*)", "destination": "/journeyonwardapp/$1" }
+  ]
+}
