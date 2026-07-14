@@ -378,6 +378,23 @@
             color: white;
             text-align: left;
         }
+        .journey-onward-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 14px 32px;
+            background-color: white;
+            color: black;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            border-radius: 999px;
+            border: 2px solid white;
+            transition: all 0.3s ease;
+        }
+        .journey-onward-btn:hover {
+            background-color: transparent;
+            color: white;
+        }
         .phone-graphic {
             max-width: 486px; /* 1.35x bigger (360px * 1.35) */
             transform: none;
@@ -1066,6 +1083,10 @@
                 text-align: center;
                 order: 4; /* Move "coming soon" to the bottom */
             }
+            .journey-onward-btn {
+                order: 5;
+                margin-top: 16px;
+            }
             .feature-button {
                 width: 100%;
                 min-width: auto;
@@ -1372,6 +1393,7 @@
                         <span class="italic-line">→ Carry the power of awe-inspiring<span class="mobile-line-break"></span> moments into everyday life</span>
                     </div>
                     <p class="coming-soon fade-element" id="comingSoon">Coming soon...</p>
+                    <a href="/journeyonwardapp" class="journey-onward-btn fade-element" id="journeyOnwardBtn">Visit Journey Onward</a>
                 </div>
             </div>
         </div>
@@ -1950,6 +1972,7 @@
             const featureButtons = document.querySelectorAll('.feature-button');
             const appDescription = document.getElementById('appDescription');
             const comingSoon = document.getElementById('comingSoon');
+            const journeyOnwardBtn = document.getElementById('journeyOnwardBtn');
             // Create array in the order we want them to fade in
             const fadeElements = [
                 phoneGraphic,
@@ -1957,7 +1980,8 @@
                 appTitleSub,
                 ...Array.from(featureButtons),
                 appDescription,
-                comingSoon
+                comingSoon,
+                journeyOnwardBtn
             ];
             // Create observer for the travel app section
             const observer = new IntersectionObserver((entries) => {
